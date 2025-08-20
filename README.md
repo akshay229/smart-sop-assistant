@@ -1,7 +1,4 @@
-# smart-sop-assistant
-A no-code AI-powered chatbot built using Flowise and GPT-4o to answer employee questions from PDF documents.
-# Smart SOP Assistant 🤖📄
-
+# Smart SOP Assistant
 A no-code AI assistant that answers questions from internal documents like employee handbooks, SOPs, and HR policies.
 
 ## 🔧 Built With
