@@ -1,0 +1,130 @@
+{
+  "name": "Smart SOP Assistant (OpenRouter)",
+  "description": "Chatbot to answer questions based on PDF policies/SOPs using Chroma + OpenRouter GPT.",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Document Loader",
+      "type": "documentloaders",
+      "category": "Document Loaders",
+      "inputs": {
+        "fileType": "pdf",
+        "source": "upload"
+      },
+      "position": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "id": "2",
+      "name": "Character Text Splitter",
+      "type": "textsplitters",
+      "category": "Text Splitters",
+      "inputs": {
+        "chunkSize": 1000,
+        "chunkOverlap": 200
+      },
+      "position": {
+        "x": 350,
+        "y": 100
+      }
+    },
+    {
+      "id": "3",
+      "name": "OpenAI Embeddings",
+      "type": "embeddings",
+      "category": "Embeddings",
+      "inputs": {
+        "model": "text-embedding-ada-002"
+      },
+      "position": {
+        "x": 600,
+        "y": 100
+      }
+    },
+    {
+      "id": "4",
+      "name": "Chroma",
+      "type": "vectorstores",
+      "category": "Vector Stores",
+      "inputs": {
+        "collectionName": "sop_demo"
+      },
+      "position": {
+        "x": 850,
+        "y": 100
+      }
+    },
+    {
+      "id": "5",
+      "name": "LLM",
+      "type": "llms",
+      "category": "LLMs",
+      "inputs": {
+        "model": "openrouter/openai/gpt-3.5-turbo",
+        "temperature": 0.7
+      },
+      "position": {
+        "x": 1100,
+        "y": 100
+      }
+    },
+    {
+      "id": "6",
+      "name": "Conversational Retrieval QA Chain",
+      "type": "chains",
+      "category": "Chains",
+      "inputs": {},
+      "position": {
+        "x": 1350,
+        "y": 100
+      }
+    },
+    {
+      "id": "7",
+      "name": "Chat Output",
+      "type": "output",
+      "category": "Output",
+      "inputs": {},
+      "position": {
+        "x": 1600,
+        "y": 100
+      }
+    }
+  ],
+  "connections": [
+    {
+      "source": "1",
+      "target": "2"
+    },
+    {
+      "source": "2",
+      "target": "3"
+    },
+    {
+      "source": "2",
+      "target": "4",
+      "targetHandle": "document"
+    },
+    {
+      "source": "3",
+      "target": "4",
+      "targetHandle": "embeddings"
+    },
+    {
+      "source": "4",
+      "target": "6",
+      "targetHandle": "vectorStore"
+    },
+    {
+      "source": "5",
+      "target": "6",
+      "targetHandle": "llm"
+    },
+    {
+      "source": "6",
+      "target": "7"
+    }
+  ]
+}
